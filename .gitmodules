@@ -1,0 +1,6 @@
+[submodule "luajit"]
+	path = luajit
+	url = https://github.com/LuaDist/luajit.git
+[submodule "physfs"]
+	path = physfs
+	url = https://github.com/criptych/physfs.git
