@@ -41,7 +41,7 @@ void StateManager::pushState(State &state)
 
     if (state.m_mgr)
     {
-        state.m_mgr->removeState(state);
+        state.m_mgr->popState(state);
     }
 
     state.m_mgr = this;
