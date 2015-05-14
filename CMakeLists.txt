@@ -8,6 +8,14 @@ SET(PROJECT_NAME untitled)
 SET(SOURCES
     src/Includes.cpp
     src/Main.cpp
+    src/App.hpp
+    src/App.cpp
+    src/State.hpp
+    src/State.cpp
+    src/StateManager.hpp
+    src/StateManager.cpp
+    src/Layer.hpp
+    src/Layer.cpp
     src/LuaState.hpp
     src/LuaState.cpp
     src/PhysicsFS.hpp

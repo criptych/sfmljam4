@@ -18,6 +18,10 @@ class PhysInputStream : public sf::InputStream
 private:
     PhysInputStream(PHYSFS_File *file);
 
+    friend class PhysicsFS;
+
+    PHYSFS_File *m_file;
+
 public:
     PhysInputStream(PhysInputStream &&rhs);
     virtual ~PhysInputStream();

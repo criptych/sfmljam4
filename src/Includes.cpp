@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// includes.cpp
+// Includes.cpp
 //
 // Includes all header files in the project, to ensure that all are present and
 // compileable before trying to use them in the actual source (i.e. push all
@@ -7,9 +7,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "App.hpp"
+#include "StateManager.hpp"
+#include "State.hpp"
+#include "Layer.hpp"
+
 #include "PhysicsFS.hpp"
 #include "PhysInputStream.hpp"
 #include "PhysOutputStream.hpp"
+
 #include "LuaState.hpp"
 
 #include <SFML/Audio.hpp>

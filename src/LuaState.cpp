@@ -20,7 +20,7 @@ LuaState::LuaState(lua_State *lua):
 }
 
 LuaState::LuaState(LuaState &&rhs):
-    m_lua(NULL)
+    m_lua(nullptr)
 {
     std::swap(m_lua, rhs.m_lua);
 }
@@ -36,7 +36,7 @@ LuaState::LuaState():
 
 LuaState::~LuaState()
 {
-    if (m_lua != NULL)
+    if (m_lua != nullptr)
     {
         if (lua_pushthread(m_lua))
         {
@@ -47,7 +47,7 @@ LuaState::~LuaState()
             lua_pop(m_lua, 1); // pop thread to keep the stack unchanged
         }
 
-        m_lua = NULL;
+        m_lua = nullptr;
     }
 }
 

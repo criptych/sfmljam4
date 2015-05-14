@@ -95,8 +95,7 @@ public:
     ////////////////////////////////////////////////////////////
 
     void makeDir(const char *path);
-    void removeDir(const char *path);
-    void removeFile(const char *path);
+    void remove(const char *path); // `delete' is reserved
 
     ////////////////////////////////////////////////////////////
     // File status queries

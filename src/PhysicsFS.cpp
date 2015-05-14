@@ -121,78 +121,153 @@ const char *PhysicsFS::getPrefDir(const char *orgName, const char *appName) cons
 
 ////////////////////////////////////////////////////////////////////////////////
 
-/*
-void PhysicsFS::mount(const char *path, const char *vpath = "/", bool priority = false)
+void PhysicsFS::mount(const char *path, const char *vpath, bool priority)
 {
+    if (!PHYSFS_mount(path, vpath, !priority))
+    {
+        doThrow();
+    }
 }
 
 void PhysicsFS::unmount(const char *path)
 {
+    if (!PHYSFS_unmount(path))
+    {
+        doThrow();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void PhysicsFS::makeDir(const char *path)
 {
+    if (!PHYSFS_mkdir(path))
+    {
+        doThrow();
+    }
 }
 
-void PhysicsFS::removeDir(const char *path)
+void PhysicsFS::remove(const char *path)
 {
-}
-
-void PhysicsFS::removeFile(const char *path)
-{
+    if (!PHYSFS_delete(path))
+    {
+        doThrow();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 bool PhysicsFS::isDir(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return (st.filetype == PHYSFS_FILETYPE_DIRECTORY);
 }
 
 bool PhysicsFS::isFile(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return (st.filetype == PHYSFS_FILETYPE_REGULAR);
 }
 
 bool PhysicsFS::isSymLink(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return (st.filetype == PHYSFS_FILETYPE_SYMLINK);
 }
 
 bool PhysicsFS::isReadOnly(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return st.readonly;
 }
 
 sf::Int64 PhysicsFS::getFileSize(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return st.filesize;
 }
 
 sf::Int64 PhysicsFS::getModTime(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return st.modtime;
 }
 
 sf::Int64 PhysicsFS::getCreateTime(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return st.createtime;
 }
 
 sf::Int64 PhysicsFS::getAccessTime(const char *path) const
 {
+    PHYSFS_Stat st;
+    if (!PHYSFS_stat(path, &st))
+    {
+        doThrow();
+    }
+    return st.accesstime;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 PhysInputStream PhysicsFS::openRead(const char *path)
 {
+    PHYSFS_File *file = PHYSFS_openRead(path);
+    if (!file)
+    {
+        doThrow();
+    }
+    return PhysInputStream(file);
 }
 
 PhysOutputStream PhysicsFS::openWrite(const char *path)
 {
+    PHYSFS_File *file = PHYSFS_openWrite(path);
+    if (!file)
+    {
+        doThrow();
+    }
+    return PhysOutputStream(file);
 }
 
 PhysOutputStream PhysicsFS::openAppend(const char *path)
 {
+    PHYSFS_File *file = PHYSFS_openAppend(path);
+    if (!file)
+    {
+        doThrow();
+    }
+    return PhysOutputStream(file);
 }
-
-*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
