@@ -64,41 +64,48 @@ class MyState : public State
 public:
     MyState()
     {
-        initShape(360);
+        static const unsigned int numSides[10] = {
+            90, 3, 4, 5, 6, 7, 8, 10, 12, 20
+        };
+
+        m_shapes.resize(10);
+
+        for (unsigned int i = 0; i < 10; i++)
+        {
+            initShape(m_shapes[i], sf::Vector2f(80+150*((i+1)%5), 270+150*((i+1)/5)), 50, numSides[i]);
+        }
     }
 
 protected:
-    void initShape(unsigned int n = 5)
+    void initShape(sf::ConvexShape &shape, const sf::Vector2f &position, float radius, unsigned int sides = 0)
     {
-        if (n < 3) n = 3;
+        if (sides < 3) sides = 3;
 
         static const float PI = 3.14159265359f;
 
-        float angle = PI / float(n);
+        float angle = PI / float(sides);
         float step = angle * 2.f;
 
-        m_shape.setPointCount(n);
+        shape.setPointCount(sides);
 
-        for (unsigned int i = 0; i < n; i++)
+        for (unsigned int i = 0; i < sides; i++)
         {
-            m_shape.setPoint(i, sf::Vector2f(100.f*std::cos(angle), 100.f*std::sin(angle)));
+            shape.setPoint(i, sf::Vector2f(radius*std::cos(angle), radius*std::sin(angle)));
             angle += step;
         }
 
-        // m_shape.setPoint(0, sf::Vector2f(-100, -100));
-        // m_shape.setPoint(1, sf::Vector2f(-100,  100));
-        // m_shape.setPoint(2, sf::Vector2f( 100,  100));
-        // m_shape.setPoint(3, sf::Vector2f( 100, -100));
-
-        m_shape.setOutlineThickness(5);
-        m_shape.setOutlineColor(sf::Color::Black);
-        m_shape.setFillColor(sf::Color(160,160,160));
-        m_shape.setPosition(sf::Vector2f(200,200));
+        shape.setOutlineThickness(5);
+        shape.setOutlineColor(sf::Color::Black);
+        shape.setFillColor(sf::Color(160,160,160));
+        shape.setPosition(position);
     }
 
     void onUpdate(sf::Time delta)
     {
-        m_shape.rotate(90.f * delta.asSeconds());
+        for (sf::Shape &shape : m_shapes)
+        {
+            shape.rotate(90.f * delta.asSeconds());
+        }
     }
 
     bool onEvent(const sf::Event &event)
@@ -107,22 +114,54 @@ protected:
         {
             case sf::Event::KeyPressed:
             {
-                if (event.key.code == sf::Keyboard::Space)
+                switch (event.key.code)
                 {
-                    m_shape.setFillColor(sf::Color::Red);
-                    return true;
+                    case sf::Keyboard::Num0:
+                    case sf::Keyboard::Num1:
+                    case sf::Keyboard::Num2:
+                    case sf::Keyboard::Num3:
+                    case sf::Keyboard::Num4:
+                    case sf::Keyboard::Num5:
+                    case sf::Keyboard::Num6:
+                    case sf::Keyboard::Num7:
+                    case sf::Keyboard::Num8:
+                    case sf::Keyboard::Num9:
+                    {
+                        m_shapes[event.key.code - sf::Keyboard::Num0].
+                            setFillColor(sf::Color::Red);
+                        return true;
+                    }
+
+                    default: break;
                 }
                 break;
             }
+
             case sf::Event::KeyReleased:
             {
-                if (event.key.code == sf::Keyboard::Space)
+                switch (event.key.code)
                 {
-                    m_shape.setFillColor(sf::Color::Green);
-                    return true;
+                    case sf::Keyboard::Num0:
+                    case sf::Keyboard::Num1:
+                    case sf::Keyboard::Num2:
+                    case sf::Keyboard::Num3:
+                    case sf::Keyboard::Num4:
+                    case sf::Keyboard::Num5:
+                    case sf::Keyboard::Num6:
+                    case sf::Keyboard::Num7:
+                    case sf::Keyboard::Num8:
+                    case sf::Keyboard::Num9:
+                    {
+                        m_shapes[event.key.code - sf::Keyboard::Num0].
+                            setFillColor(sf::Color::Green);
+                        return true;
+                    }
+
+                    default: break;
                 }
                 break;
             }
+
             default: break;
         }
 
@@ -132,11 +171,14 @@ protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.clear(sf::Color(0x6688aa));
-        target.draw(m_shape, states);
+        for (const sf::Shape &shape : m_shapes)
+        {
+            target.draw(shape, states);
+        }
     }
 
 private:
-    sf::ConvexShape m_shape;
+    std::vector < sf::ConvexShape > m_shapes;
 };
 
 class MyApp : public App
@@ -163,8 +205,11 @@ protected:
             {
                 if (event.key.code == sf::Keyboard::Escape)
                 {
-                    pushState(m_pauseState);
-                    return true;
+                    if (getState() != &m_pauseState)
+                    {
+                        pushState(m_pauseState);
+                        return true;
+                    }
                 }
                 break;
             }
