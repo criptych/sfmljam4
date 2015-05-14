@@ -17,6 +17,7 @@ App::App():
 
 App::~App()
 {
+    sf::err() << "App::~App\n";
     m_window.close();
 }
 

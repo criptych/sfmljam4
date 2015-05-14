@@ -14,6 +14,7 @@
 #include "LuaState.hpp"
 
 #include "App.hpp"
+#include "State.hpp"
 
 #include <cmath>
 
@@ -39,7 +40,7 @@ protected:
             }
             else if (event.key.code == sf::Keyboard::Escape)
             {
-                throw State::Exit;
+                exit();
             }
         }
 

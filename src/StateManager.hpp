@@ -7,11 +7,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "State.hpp"
-
 #include <SFML/Graphics.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
+
+class State;
 
 class StateManager
 {
@@ -23,6 +23,7 @@ public:
     State *popState();
     void popState(State &state);
     State *setState(State &state);
+    State *getState() const;
 
     bool handleEvent(const sf::Event &event);
     void update(sf::Time delta);

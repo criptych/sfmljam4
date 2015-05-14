@@ -15,6 +15,7 @@ State::State():
 
 State::~State()
 {
+    sf::err() << "State::~State\n";
     exit();
 }
 

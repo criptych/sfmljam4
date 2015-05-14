@@ -13,9 +13,6 @@
 
 class State : public sf::Drawable
 {
-public:
-    static const class _Exit {} Exit;
-
 protected:
     State();
 
