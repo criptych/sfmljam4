@@ -6,7 +6,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 SET(PROJECT_NAME untitled)
 SET(SOURCES
-    src/Includes.cpp
     src/Main.cpp
     src/App.hpp
     src/App.cpp
@@ -18,12 +17,16 @@ SET(SOURCES
     src/Layer.cpp
     src/LuaState.hpp
     src/LuaState.cpp
+    src/Particle.hpp
+    src/Particle.cpp
     src/PhysicsFS.hpp
     src/PhysicsFS.cpp
     src/PhysInputStream.hpp
     src/PhysInputStream.cpp
     src/PhysOutputStream.hpp
     src/PhysOutputStream.cpp
+    src/Resource.hpp
+    src/Resource.cpp
 )
 
 PROJECT(${PROJECT_NAME} CXX)
