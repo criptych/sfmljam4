@@ -32,25 +32,39 @@ template <typename T>
 class Handle
 {
 public:
-    Handle(T *t = nullptr):
+    Handle():
         m_t()
     {
-        set(t);
     }
 
-    Handle(const Handle<T> &h)
+    template <typename X>
+    Handle(X *x):
+        m_t()
     {
-        set(h);
+        set(x);
     }
 
-    Handle(Handle<T> &&h)
+    template <typename X>
+    Handle(const Handle<X> &h)
     {
-        h.set(set(h));
+        set(h.operator X*());
+    }
+
+    template <typename X>
+    Handle(Handle<X> &&h)
+    {
+        T *p = m_t;
+        m_t = h.m_t;
+        h.m_t = p;
     }
 
     ~Handle()
     {
-        set(nullptr);
+        if (m_t != nullptr)
+        {
+            m_t->release();
+            m_t = nullptr;
+        }
     }
 
     Handle<T> &operator=(T *t)
@@ -59,7 +73,37 @@ public:
         return *this;
     }
 
-    operator T*()
+    Handle<T> &operator=(T &t)
+    {
+        set(&t);
+        return *this;
+    }
+
+    template <typename X>
+    Handle<T> &operator=(const Handle<X> &h)
+    {
+        set(h.operator X*());
+        return *this;
+    }
+
+    template <typename X>
+    bool operator==(const Handle<X> &h) const
+    {
+        return m_t == h.operator X*();
+    }
+
+    template <typename X>
+    bool operator==(const X *x) const
+    {
+        return m_t == x;
+    }
+
+    operator T&() const
+    {
+        return *m_t;
+    }
+
+    operator T*() const
     {
         return m_t;
     }
@@ -69,29 +113,31 @@ public:
         return m_t;
     }
 
-private:
-    T *set(T *t)
+    T *operator->() const
     {
-        if (m_t != t)
+        return m_t;
+    }
+
+private:
+    template <typename X>
+    void set(X *x)
+    {
+        if (m_t != x)
         {
-            T *x = m_t;
+            T *t = m_t;
 
-            if (t)
+            if (x != nullptr)
             {
-                t->acquire();
+                x->acquire();
             }
 
-            m_t = t;
+            m_t = x;
 
-            if (x)
+            if (t != nullptr)
             {
-                x->release();
+                t->release();
             }
-
-            return x;
         }
-
-        return t;
     }
 
     T *m_t;
