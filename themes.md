@@ -1,5 +1,7 @@
 # 4th SFML Game Jam Themes
 
+## Chosen Theme: From the end to the beginning
+
 - **Themes voted up**
 - *Themes voted down*
 
@@ -52,13 +54,13 @@
 
 | | Theme | Score | -1 | +1 | Votes |
 | - |
-| | **Black'n White** | | | | |
-| | **Geometric Shapes** | | | | |
-| | **You can't escape** | | | | |
-| | **From the end to the beginning** | | | | |
-| | Immortal Life | | | | |
-| | Procedural Generation | | | | |
-| | Dimensions | | | | |
-| | Limited Resource Management | | | | |
-| | Extinction | | | | |
-| | *Minerals* | | | | |
+| 1 | **From the end to the beginning** | 5 | 4 | 9 | 13 |
+| 1 | **Black'n White** | 5 | 5 | 10 | 15 |
+| 3 | Dimensions | 4 | 2 | 6 | 8 |
+| 3 | **You can't escape** | 4 | 3 | 7 | 10 |
+| 3 | *Minerals* | 4 | 3 | 7 | 10 |
+| 6 | Procedural Generation | 3 | 4 | 7 | 11 |
+| 7 | Extinction | 1 | 4 | 5 | 9 |
+| 7 | Limited Resource Management | 1 | 5 | 6 | 11 |
+| 9 | **Geometric Shapes** | -3 | 8 | 5 | 13 |
+| 9 | Immortal Life | -3 | 5 | 2 | 7 |
