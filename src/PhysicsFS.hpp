@@ -50,7 +50,14 @@ public:
     class Error : public std::exception
     {
     public:
-        Error(ErrorCode code): m_code(code), m_msg(getErrorByCode(code)) {}
+        Error(ErrorCode code, const std::string &msg = ""):
+            m_code(code), m_msg(getErrorByCode(code))
+        {
+            if (!msg.empty())
+            {
+                m_msg = msg + ": " + m_msg;
+            }
+        }
 
         ErrorCode code() const { return m_code; }
         const char *what() const throw() { return m_msg.c_str(); }
@@ -61,7 +68,7 @@ public:
     };
 
 private:
-    void doThrow() const throw(PhysicsFS::Error);
+    void doThrow(const std::string &msg = "") const throw(PhysicsFS::Error);
 
 public:
     PhysicsFS(const char *arg0);
