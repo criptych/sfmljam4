@@ -9,14 +9,12 @@ SET(SOURCES
     src/Main.cpp
     src/App.hpp
     src/App.cpp
-    src/State.hpp
-    src/State.cpp
-    src/StateManager.hpp
-    src/StateManager.cpp
     src/Layer.hpp
     src/Layer.cpp
     src/LuaState.hpp
     src/LuaState.cpp
+    src/Object.hpp
+    src/Object.cpp
     src/Particle.hpp
     src/Particle.cpp
     src/PhysicsFS.hpp
@@ -27,6 +25,10 @@ SET(SOURCES
     src/PhysOutputStream.cpp
     src/Resource.hpp
     src/Resource.cpp
+    src/State.hpp
+    src/State.cpp
+    src/StateManager.hpp
+    src/StateManager.cpp
 )
 
 PROJECT(${PROJECT_NAME} CXX)

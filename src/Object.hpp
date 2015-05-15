@@ -2,8 +2,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __LAYER_HPP__
-#define __LAYER_HPP__ 1
+#ifndef __OBJECT_HPP__
+#define __OBJECT_HPP__ 1
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -13,30 +13,23 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Object;
-
-class Layer : public sf::Drawable, public sf::View
+class Object : public sf::Drawable, public sf::Transformable, public Resource
 {
 public:
-    Layer();
-    ~Layer();
+    Object();
+    ~Object();
 
     void update(sf::Time delta);
-
-    void follow(Object &object);
-    void follow();
 
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
-    Handle<Object> m_following;
-    std::vector< Handle<Object> > m_objects;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // __LAYER_HPP__
+#endif // __OBJECT_HPP__
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
