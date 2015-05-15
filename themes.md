@@ -37,13 +37,28 @@
 
 | | Theme | Score | -1 | +1 | Votes |
 | - |
-| | **Emotional Grey** | - | - | - | - |
-| | **Lose to win** | - | - | - | - |
-| | **You can't escape** | - | - | - | - |
-| | **Geometric Shapes** | - | - | - | - |
-| | Limited Resource Management | - | - | - | - |
-| | Candy Bars | - | - | - | - |
-| | Train network | - | - | - | - |
-| | Use gravity to win | - | - | - | - |
-| | Immortal Life | - | - | - | - |
-| | *Clouds have feelings too* | - | - | - | - |
+| 1 | **You can't escape** | 6 | 3 | 9 | 12 |
+| 2 | Limited Resource Management | 5 | 4 | 9 | 13 |
+| 3 | **Geometric Shapes** | 3 | 5 | 8 | 13 |
+| 3 | Immortal Life | 3 | 2 | 5 | 7 |
+| 5 | Train network | 1 | 6 | 7 | 13 |
+| 5 | **Lose to win** | 1 | 5 | 6 | 11 |
+| 7 | Use gravity to win | -2 | 5 | 3 | 8 |
+| 8 | **Emotional Grey** | -3 | 8 | 5 | 13 |
+| 9 | *Clouds have feelings too* | -6 | 8 | 2 | 10 |
+| 9 | Candy Bars | -6 | 8 | 2 | 10 |
+
+### Final Round
+
+| | Theme | Score | -1 | +1 | Votes |
+| - |
+| | **Black'n White** | | | | |
+| | **Geometric Shapes** | | | | |
+| | **You can't escape** | | | | |
+| | **From the end to the beginning** | | | | |
+| | Immortal Life | | | | |
+| | Procedural Generation | | | | |
+| | Dimensions | | | | |
+| | Limited Resource Management | | | | |
+| | Extinction | | | | |
+| | *Minerals* | | | | |
