@@ -72,7 +72,8 @@ public:
 
         for (unsigned int i = 0; i < 10; i++)
         {
-            initShape(m_shapes[i], sf::Vector2f(80+150*((i+1)%5), 270+150*((i+1)/5)), 50, numSides[i]);
+            int r = ((i+9)/5)%2, c = (i+9)%5;
+            initShape(m_shapes[i], sf::Vector2f(80+150*c, 270+150*r), 50, numSides[i]);
         }
     }
 
@@ -171,6 +172,7 @@ protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.clear(sf::Color(0x6688aa));
+
         for (const sf::Shape &shape : m_shapes)
         {
             target.draw(shape, states);
