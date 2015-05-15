@@ -111,19 +111,29 @@ void LuaState::loadSafeLibs()
     //
 }
 
+bool LuaState::tryDoString(const char *string)
+{
+    return (0 == luaL_dostring(m_lua, string));
+}
+
+bool LuaState::tryDoFile(const char *filename)
+{
+    return (0 == luaL_dofile(m_lua, filename));
+}
+
 void LuaState::doString(const char *string)
 {
-    if (luaL_dostring(m_lua, string))
+    if (!tryDoString(string))
     {
-        throw Error(lua_tostring(m_lua, -1));
+        throw Error(toString());
     }
 }
 
 void LuaState::doFile(const char *filename)
 {
-    if (luaL_dofile(m_lua, filename))
+    if (!tryDoFile(filename))
     {
-        throw Error(lua_tostring(m_lua, -1));
+        throw Error(toString());
     }
 }
 

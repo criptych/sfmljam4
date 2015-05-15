@@ -47,6 +47,9 @@ public:
     void loadStdLibs();
     void loadSafeLibs();
 
+    bool tryDoString(const char *string);
+    bool tryDoFile(const char *filename);
+
     void doString(const char *string);
     void doFile(const char *filename);
 
