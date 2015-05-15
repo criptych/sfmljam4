@@ -231,35 +231,43 @@ private:
 extern "C"
 int main (int argc, char **argv)
 {
-    PhysicsFS physfs(argv[0]);
-
     try
     {
+        PhysicsFS physfs(argv[0]);
+
+        try
+        {
+            physfs.mount("data.zip");
+        }
+        catch (PhysicsFS::Error)
+        {
+            physfs.mount("data/");
+        }
+
         LuaState lua;
 
-        try
+        if (!lua.tryDoFile("config.lua"))
         {
-            lua.doFile("config.lua");
+            sf::err() << "Config script error: " << lua.toString() << "\n";
         }
-        catch (LuaState::Error &exc)
-        {
-            sf::err() << "Config script error: " << exc.what() << "\n";
-        }
-
-        lua.loadSafeLibs();
 
         try
         {
-            lua.doFile("init.lua");
+            lua.loadSafeLibs();
+
+            lua.doFile("data/scripts/init.lua");
+
+            MyApp app;
+            app.run();
+        }
+        catch (PhysicsFS::Error &exc)
+        {
+            sf::err() << "PhysFS error: " << exc.what() << "\n";
         }
         catch (LuaState::Error &exc)
         {
-            sf::err() << "Init script error: " << exc.what() << "\n";
-            throw;
+            sf::err() << "Lua error: " << exc.what() << "\n";
         }
-
-        MyApp app;
-        app.run();
     }
     catch (std::exception &exc)
     {
