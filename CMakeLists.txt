@@ -70,6 +70,16 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
         "$<TARGET_FILE:liblua>" ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+SET(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
+IF(EXISTS "${DATA_DIR}" AND IS_DIRECTORY "${DATA_DIR}")
+    ADD_CUSTOM_TARGET(copy_data)
+    ADD_DEPENDENCIES(${PROJECT_NAME} copy_data)
+    ADD_CUSTOM_COMMAND(TARGET copy_data
+        COMMAND cmake -E copy_directory
+            "${DATA_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/data"
+    )
+ENDIF()
+
 ################################################################################
 # EOF
 ################################################################################
