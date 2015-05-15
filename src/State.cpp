@@ -33,7 +33,7 @@ void State::exit()
 {
     if (m_mgr)
     {
-        m_mgr->popState(*this);
+        m_mgr->popState(this);
     }
 }
 

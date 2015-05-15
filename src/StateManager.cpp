@@ -21,53 +21,51 @@ StateManager::~StateManager()
     }
 }
 
-void StateManager::pushState(State &state)
+void StateManager::pushState(const Handle<State> &state)
 {
-    State *top = m_states.empty() ? nullptr : m_states.back();
-
-    if (state.isModal())
+    if (state->isModal())
     {
         m_topModal = m_states.size();
 
-        if (top)
+        if (!m_states.empty())
         {
-            top->onSuspend();
+            m_states.back()->onSuspend();
         }
     }
-    if (state.isOpaque())
+    if (state->isOpaque())
     {
         m_topOpaque = m_states.size();
     }
 
-    m_states.push_back(&state);
+    m_states.push_back(state);
 
-    if (state.m_mgr)
+    if (state->m_mgr)
     {
-        state.m_mgr->popState(state);
+        state->m_mgr->popState(state);
     }
 
-    state.m_mgr = this;
+    state->m_mgr = this;
 
-    state.onEnter();
+    state->onEnter();
 }
 
-State *StateManager::popState()
+Handle<State> StateManager::popState()
 {
-    State *last = m_states.empty() ? nullptr : m_states.back();
+    Handle<State> last;
 
-    if (last != nullptr)
+    if (!m_states.empty())
     {
+        last = m_states.back();
+
         sf::err() << "StateManager::popState()\n";
 
         last->onExit();
         m_states.pop_back();
         last->m_mgr = nullptr;
 
-        State *top = m_states.empty() ? nullptr : m_states.back();
-
-        if (top != nullptr)
+        if (!m_states.empty())
         {
-            top->onResume();
+            m_states.back()->onResume();
         }
 
         updateTops();
@@ -76,20 +74,20 @@ State *StateManager::popState()
     return last;
 }
 
-void StateManager::popState(State &state)
+void StateManager::popState(const Handle<State> &state)
 {
     for (unsigned int i = m_states.size(); i > 0; i--)
     {
         unsigned int j = i - 1;
 
-        if (m_states[j] == &state)
+        if (m_states[j] == state)
         {
             sf::err() << "StateManager::popState(State&)\n";
 
             m_states.erase(m_states.begin() + j);
-            state.m_mgr = nullptr;
-            state.onSuspend();
-            state.onExit();
+            state->m_mgr = nullptr;
+            state->onSuspend();
+            state->onExit();
             break;
         }
     }
@@ -97,16 +95,23 @@ void StateManager::popState(State &state)
     updateTops();
 }
 
-State *StateManager::setState(State &state)
+Handle<State> StateManager::setState(const Handle<State> &state)
 {
-    State *last = popState();
+    const Handle<State> last = popState();
     pushState(state);
     return last;
 }
 
-State *StateManager::getState() const
+Handle<State> StateManager::getState() const
 {
-    return m_states.empty() ? nullptr : m_states.back();
+    Handle<State> top;
+
+    if (!m_states.empty())
+    {
+        top = m_states.back();
+    }
+
+    return top;
 }
 
 bool StateManager::handleEvent(const sf::Event &event)
@@ -134,7 +139,7 @@ void StateManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (unsigned int i = m_topOpaque; i < m_states.size(); i++)
     {
-        target.draw(*m_states[i], states);
+        target.draw(m_states[i], states);
     }
 }
 

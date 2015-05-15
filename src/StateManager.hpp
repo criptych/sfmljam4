@@ -7,6 +7,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Resource.hpp"
+
 #include <SFML/Graphics.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,11 +21,11 @@ public:
     StateManager();
     ~StateManager();
 
-    void pushState(State &state);
-    State *popState();
-    void popState(State &state);
-    State *setState(State &state);
-    State *getState() const;
+    void pushState(const Handle<State> &state);
+    Handle<State> popState();
+    void popState(const Handle<State> &state);
+    Handle<State> setState(const Handle<State> &state);
+    Handle<State> getState() const;
 
     bool handleEvent(const sf::Event &event);
     void update(sf::Time delta);
@@ -32,7 +34,8 @@ public:
 private:
     void updateTops();
 
-    typedef std::vector<State*> StateList;
+    typedef std::vector< Handle<State> > StateList;
+
     StateList m_states;
     unsigned int m_topModal;
     unsigned int m_topOpaque;

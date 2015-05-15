@@ -190,6 +190,9 @@ public:
     {
         setTargetFPS(120.f);
         setWindowStyle(sf::Style::Titlebar | sf::Style::Close);
+
+        m_myState = new MyState;
+        m_pauseState = new PauseState;
     }
 
 protected:
@@ -207,7 +210,7 @@ protected:
             {
                 if (event.key.code == sf::Keyboard::Escape)
                 {
-                    if (getState() != &m_pauseState)
+                    if (getState() != m_pauseState)
                     {
                         pushState(m_pauseState);
                         return true;
@@ -222,8 +225,8 @@ protected:
     }
 
 private:
-    PauseState m_pauseState;
-    MyState m_myState;
+    Handle<State> m_pauseState;
+    Handle<State> m_myState;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
