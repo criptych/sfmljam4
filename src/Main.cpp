@@ -254,23 +254,20 @@ int main (int argc, char **argv)
             sf::err() << "Config script error: " << lua.toString() << "\n";
         }
 
-        try
-        {
-            lua.loadSafeLibs();
+        lua.loadSafeLibs();
 
-            lua.doFile("data/scripts/init.lua");
+        lua.doFile("data/scripts/init.lua");
 
-            MyApp app;
-            app.run();
-        }
-        catch (PhysicsFS::Error &exc)
-        {
-            sf::err() << "PhysFS error: " << exc.what() << "\n";
-        }
-        catch (LuaState::Error &exc)
-        {
-            sf::err() << "Lua error: " << exc.what() << "\n";
-        }
+        MyApp app;
+        app.run();
+    }
+    catch (PhysicsFS::Error &exc)
+    {
+        sf::err() << "PhysFS error: " << exc.what() << "\n";
+    }
+    catch (LuaState::Error &exc)
+    {
+        sf::err() << "Lua error: " << exc.what() << "\n";
     }
     catch (std::exception &exc)
     {
