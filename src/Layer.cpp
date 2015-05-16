@@ -31,7 +31,7 @@ void Layer::update(sf::Time delta)
 
 void Layer::follow(Object &object)
 {
-    m_following = Handle<Object>(object);
+    m_following = Handle<Object>(&object);
 }
 
 void Layer::follow()
