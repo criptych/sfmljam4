@@ -31,12 +31,12 @@ void Layer::update(sf::Time delta)
 
 void Layer::follow(Object &object)
 {
-    m_following = object;
+    m_following = Handle<Object>(object);
 }
 
 void Layer::follow()
 {
-    m_following = nullptr;
+    m_following = Handle<Object>();
 }
 
 void Layer::draw(sf::RenderTarget &target, sf::RenderStates states) const

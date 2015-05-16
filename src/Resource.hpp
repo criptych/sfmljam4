@@ -45,6 +45,13 @@ public:
     }
 
     template <typename X>
+    explicit Handle(X &x):
+        m_t()
+    {
+        set(&x);
+    }
+
+    template <typename X>
     Handle(const Handle<X> &h)
     {
         set(h.operator X*());
@@ -67,15 +74,10 @@ public:
         }
     }
 
-    Handle<T> &operator=(T *t)
+    template <typename X>
+    Handle<T> &operator=(X *x)
     {
-        set(t);
-        return *this;
-    }
-
-    Handle<T> &operator=(T &t)
-    {
-        set(&t);
+        set(x);
         return *this;
     }
 
