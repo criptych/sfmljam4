@@ -76,23 +76,21 @@ Handle<State> StateManager::popState()
 
 void StateManager::popState(const Handle<State> &state)
 {
-    for (unsigned int i = m_states.size(); i > 0; i--)
+    StateList::iterator end = m_states.end();
+
+    if (std::remove(m_states.begin(), end, state) != end)
     {
-        unsigned int j = i - 1;
+        sf::err() << "StateManager::popState(State&)\n";
 
-        if (m_states[j] == state)
+        if (state->m_mgr == this)
         {
-            sf::err() << "StateManager::popState(State&)\n";
-
-            m_states.erase(m_states.begin() + j);
             state->m_mgr = nullptr;
             state->onSuspend();
             state->onExit();
-            break;
         }
-    }
 
-    updateTops();
+        updateTops();
+    }
 }
 
 Handle<State> StateManager::setState(const Handle<State> &state)
@@ -116,48 +114,46 @@ Handle<State> StateManager::getState() const
 
 bool StateManager::handleEvent(const sf::Event &event)
 {
-    for (unsigned int i = m_states.size(); i > m_topModal; i--)
-    {
-        if (m_states[i-1]->handleEvent(event))
-        {
-            return true;
-        }
-    }
-
-    return false;
+    bool handled = false;
+    std::find_if(m_states.rbegin(), m_states.rend() - m_topModal,
+        [&](const Handle<State> &h) {
+            return handled |= h->handleEvent(event);
+        });
+    return handled;
 }
 
 void StateManager::update(sf::Time delta)
 {
-    for (unsigned int i = m_states.size(); i > m_topModal; i--)
-    {
-        m_states[i-1]->update(delta);
-    }
+    std::for_each(m_states.rbegin(), m_states.rend() - m_topModal,
+        [&](Handle<State> &h) {
+            h->update(delta);
+        });
 }
 
 void StateManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    for (unsigned int i = m_topOpaque; i < m_states.size(); i++)
-    {
-        target.draw(m_states[i], states);
-    }
+    std::for_each(m_states.rbegin(), m_states.rend() - m_topOpaque,
+        [&](const Handle<State> &h) {
+            target.draw(h, states);
+        });
 }
 
 void StateManager::updateTops()
 {
     m_topModal = m_topOpaque = 0;
 
-    for (unsigned int i = m_states.size(); i > 0; i--)
-    {
-        unsigned int j = i - 1;
+    unsigned int i = m_states.size();
 
-        if ((j > m_topModal) && m_states[j]->isModal())
+    for (Handle<State> &h : m_states)
+    {
+        --i;
+        if ((i > m_topModal) && h->isModal())
         {
-            m_topModal = j;
+            m_topModal = i;
         }
-        if ((j > m_topOpaque) && m_states[j]->isOpaque())
+        if ((i > m_topOpaque) && h->isOpaque())
         {
-            m_topOpaque = j;
+            m_topOpaque = i;
         }
     }
 }
