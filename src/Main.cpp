@@ -26,6 +26,16 @@ public:
     PauseState() {}
 
 protected:
+    void onEnter()
+    {
+        sf::err() << "PauseState::onEnter()\n";
+    }
+
+    void onExit()
+    {
+        sf::err() << "PauseState::onEnter()\n";
+    }
+
     void onUpdate(sf::Time delta)
     {
     }
@@ -78,6 +88,16 @@ public:
     }
 
 protected:
+    void onEnter()
+    {
+        sf::err() << "MyState::onEnter()\n";
+    }
+
+    void onExit()
+    {
+        sf::err() << "MyState::onEnter()\n";
+    }
+
     void initShape(sf::ConvexShape &shape, const sf::Vector2f &position, float radius, unsigned int sides = 0)
     {
         if (sides < 3) sides = 3;
@@ -191,8 +211,8 @@ public:
         setTargetFPS(120.f);
         setWindowStyle(sf::Style::Titlebar | sf::Style::Close);
 
-        m_myState = new MyState;
-        m_pauseState = new PauseState;
+        // m_myState = std::shared_ptr<State>(new MyState);
+        // m_pauseState = std::shared_ptr<State>(new PauseState);
     }
 
 protected:
@@ -210,7 +230,7 @@ protected:
             {
                 if (event.key.code == sf::Keyboard::Escape)
                 {
-                    if (getState() != m_pauseState)
+                    if (getState() != &m_pauseState)
                     {
                         pushState(m_pauseState);
                         return true;
@@ -225,8 +245,10 @@ protected:
     }
 
 private:
-    Handle<State> m_pauseState;
-    Handle<State> m_myState;
+    // std::shared_ptr<State> m_pauseState;
+    // std::shared_ptr<State> m_myState;
+    PauseState m_pauseState;
+    MyState m_myState;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

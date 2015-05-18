@@ -22,13 +22,13 @@ void Resource::acquire()
 
 void Resource::release()
 {
+    if (m_count > 0)
+    {
+        m_count -= 1;
+    }
     if (m_count == 0)
     {
         delete this;
-    }
-    else
-    {
-        m_count -= 1;
     }
 }
 

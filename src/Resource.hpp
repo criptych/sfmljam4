@@ -82,6 +82,15 @@ public:
     }
 
     template <typename X>
+    Handle<T> &operator=(Handle<X> &&h)
+    {
+        T *p = m_t;
+        m_t = h.m_t;
+        h.m_t = p;
+        return *this;
+    }
+
+    template <typename X>
     bool operator==(const Handle<X> &h) const
     {
         return m_t == h.operator X*();

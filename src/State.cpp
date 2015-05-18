@@ -11,11 +11,12 @@
 State::State():
     m_mgr()
 {
+    sf::err() << "State<" << this << ">::State()\n";
 }
 
 State::~State()
 {
-    sf::err() << "State::~State\n";
+    sf::err() << "State<" << this << ">::~State()\n";
     exit();
 }
 
@@ -53,18 +54,22 @@ bool State::isModal() const
 
 void State::onEnter()
 {
+    sf::err() << "State<" << this << ">::onEnter()\n";
 }
 
 void State::onSuspend()
 {
+    sf::err() << "State<" << this << ">::onSuspend()\n";
 }
 
 void State::onResume()
 {
+    sf::err() << "State<" << this << ">::onResume()\n";
 }
 
 void State::onExit()
 {
+    sf::err() << "State<" << this << ">::onExit()\n";
 }
 
 bool State::onEvent(const sf::Event &event)
