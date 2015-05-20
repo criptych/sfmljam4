@@ -18,7 +18,7 @@ Layer::~Layer()
 
 void Layer::update(sf::Time delta)
 {
-    for (Handle<Object> &object : m_objects)
+    for (Object *object : m_objects)
     {
         object->update(delta);
     }
@@ -31,21 +31,21 @@ void Layer::update(sf::Time delta)
 
 void Layer::follow(Object &object)
 {
-    m_following = Handle<Object>(&object);
+    m_following = &object;
 }
 
 void Layer::follow()
 {
-    m_following = Handle<Object>();
+    m_following = nullptr;
 }
 
 void Layer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
-    for (const Handle<Object> &object : m_objects)
+    for (const Object *object : m_objects)
     {
-        target.draw(object, states);
+        target.draw(*object, states);
     }
 }
 

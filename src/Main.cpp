@@ -210,9 +210,6 @@ public:
     {
         setTargetFPS(120.f);
         setWindowStyle(sf::Style::Titlebar | sf::Style::Close);
-
-        // m_myState = std::shared_ptr<State>(new MyState);
-        // m_pauseState = std::shared_ptr<State>(new PauseState);
     }
 
 protected:

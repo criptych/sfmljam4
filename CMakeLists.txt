@@ -23,8 +23,6 @@ SET(SOURCES
     src/PhysInputStream.cpp
     src/PhysOutputStream.hpp
     src/PhysOutputStream.cpp
-    src/Resource.hpp
-    src/Resource.cpp
     src/State.hpp
     src/State.cpp
     src/StateManager.hpp

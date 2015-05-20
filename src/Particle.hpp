@@ -9,8 +9,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Resource.hpp"
-
 #include <SFML/Graphics.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +16,7 @@
 class Particle
 {
 public:
-    class Force : public Resource
+    class Force
     {
     public:
         enum Type
@@ -49,7 +47,7 @@ public:
         float m_radius;
     };
 
-    class State : public Resource
+    class State
     {
     public:
         State(float mass = 1.f, State *next = nullptr);
@@ -59,7 +57,9 @@ public:
         Particle::Force &removeForce(unsigned int i);
 
     private:
-        std::vector< Handle<Particle::Force> > m_forces;
+        typedef std::vector< Particle::Force * > ForceList;
+
+        ForceList m_forces;
         float m_mass;
         State *m_next;
     };
@@ -85,9 +85,12 @@ public:
         void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     private:
+        typedef std::vector< Particle > ParticleList;
+        typedef std::vector< Particle::State * > StateList;
+
         bool m_running;
-        std::vector<Particle> m_particles;
-        std::vector< Handle<Particle::State> > m_states;
+        ParticleList m_particles;
+        StateList m_states;
     };
 
 protected:
@@ -105,7 +108,7 @@ private:
     float m_spin;
     float m_age;
     float m_life;
-    Handle<State> m_state;
+    State *m_state;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

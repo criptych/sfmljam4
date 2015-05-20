@@ -7,13 +7,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Resource.hpp"
-
 #include <SFML/Graphics.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Object : public sf::Drawable, public sf::Transformable, public Resource
+class Object : public sf::Drawable, public sf::Transformable
 {
 public:
     Object();
