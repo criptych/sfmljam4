@@ -34,6 +34,14 @@ void State::exit()
 {
     if (m_mgr)
     {
+        m_mgr->removeState(this);
+    }
+}
+
+void State::pop()
+{
+    if (m_mgr)
+    {
         m_mgr->popState(this);
     }
 }

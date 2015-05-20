@@ -24,10 +24,10 @@ public:
 
     void exit();
 
+    void pop();
+
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-
-    void pop();
 
 public:
     virtual bool isOpaque() const;

@@ -24,6 +24,8 @@ public:
     State *popState();
     void popState(State *state);
     void popState(State &state);
+    void removeState(State *state);
+    void removeState(State &state);
     State *setState(State *state);
     State *setState(State &state);
     State *getState() const;
